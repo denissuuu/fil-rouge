@@ -1,12 +1,18 @@
 package com.yplaza.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
 @Table(name = "agencies")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Agency {
 
     @Id

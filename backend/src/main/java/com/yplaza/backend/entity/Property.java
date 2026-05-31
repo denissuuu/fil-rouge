@@ -1,13 +1,19 @@
 package com.yplaza.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "properties")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Property {
 
     @Id
@@ -36,7 +42,8 @@ public class Property {
     private PropertyType type;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    @Builder.Default
+    private Status status = Status.AVAILABLE;
 
     @ManyToOne
     @JoinColumn(name = "agent_id")
@@ -52,6 +59,7 @@ public class Property {
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
+        if (status == null) status = Status.AVAILABLE;
     }
 
     public enum PropertyType {
