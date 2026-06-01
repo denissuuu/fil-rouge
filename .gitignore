@@ -1,0 +1,43 @@
+# ── Java / Maven ────────────────────────────────────────────
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# ── Spring Boot ──────────────────────────────────────────────
+backend/src/main/resources/application-local.yml
+
+# ── Node.js / React ──────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# ── Python ───────────────────────────────────────────────────
+data/__pycache__/
+data/*.pyc
+data/.env
+data/output/
+data/venv/
+data/.venv/
+__pycache__/
+*.py[cod]
+
+# ── IDE ──────────────────────────────────────────────────────
+.idea/
+.vscode/settings.json
+*.iml
+.DS_Store
+Thumbs.db
+
+# ── Docker ───────────────────────────────────────────────────
+pgdata/
+
+# ── Secrets ──────────────────────────────────────────────────
+*.env
+.env*
+!.env.example
+secrets/
