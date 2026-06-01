@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { Building2, LogOut, User } from 'lucide-react'
+import { Building2, LogOut, User, BarChart2 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function Navbar() {
@@ -26,6 +26,10 @@ export default function Navbar() {
             </Link>
             <Link to="/agencies" className="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">
               Agences
+            </Link>
+            <Link to="/analytics" className="flex items-center gap-1 text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">
+              <BarChart2 size={14} />
+              Marché
             </Link>
           </div>
 
