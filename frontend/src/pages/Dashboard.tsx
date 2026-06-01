@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { PlusCircle, Home, Building2, Trash2 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 import { getProperties, deleteProperty, updateProperty } from '../api/properties'
 import Modal from '../components/Modal'
 import PropertyForm from '../components/PropertyForm'
@@ -21,6 +22,7 @@ const NEXT_STATUS: Record<PropertyStatus, PropertyStatus> = {
 
 export default function Dashboard() {
   const { user, isAuthenticated } = useAuth()
+  const toast = useToast()
   const [properties, setProperties] = useState<Property[]>([])
   const [showForm, setShowForm] = useState(false)
 
@@ -35,18 +37,29 @@ export default function Dashboard() {
   const handleCreated = (p: Property) => {
     setProperties(prev => [p, ...prev])
     setShowForm(false)
+    toast.success('Annonce publiée avec succès !')
   }
 
   const handleDelete = async (id: number) => {
     if (!confirm('Supprimer cette annonce ?')) return
-    await deleteProperty(id)
-    setProperties(prev => prev.filter(p => p.id !== id))
+    try {
+      await deleteProperty(id)
+      setProperties(prev => prev.filter(p => p.id !== id))
+      toast.success('Annonce supprimée.')
+    } catch {
+      toast.error('Erreur lors de la suppression.')
+    }
   }
 
   const handleStatusChange = async (p: Property) => {
     const next = NEXT_STATUS[p.status]
-    const updated = await updateProperty(p.id, { ...p, status: next })
-    setProperties(prev => prev.map(x => x.id === updated.id ? updated : x))
+    try {
+      const updated = await updateProperty(p.id, { ...p, status: next })
+      setProperties(prev => prev.map(x => x.id === updated.id ? updated : x))
+      toast.success(`Statut mis à jour : ${STATUS_LABELS[next]}`)
+    } catch {
+      toast.error('Erreur lors de la mise à jour du statut.')
+    }
   }
 
   return (
