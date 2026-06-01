@@ -8,7 +8,12 @@ export const getProperty = (id: number) => api.get<Property>(`/properties/${id}`
 export const getPropertiesByCity = (city: string) =>
   api.get<Property[]>(`/properties/city/${encodeURIComponent(city)}`).then(r => r.data)
 
-export const createProperty = (data: Omit<Property, 'id' | 'createdAt' | 'agentName' | 'agencyName'>) =>
+interface CreatePropertyPayload {
+  title: string; description: string; price: number; surface: number
+  city: string; address: string; type: string; status: string; agencyId: number | null
+}
+
+export const createProperty = (data: CreatePropertyPayload) =>
   api.post<Property>('/properties', data).then(r => r.data)
 
 export const updateProperty = (id: number, data: Partial<Property>) =>
